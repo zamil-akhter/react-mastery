@@ -1,3 +1,5 @@
+import Card from "./components/card"
+
 
 function App() {
 
@@ -5,6 +7,7 @@ function App() {
     <>
       <h2>React with tailwind and props</h2>
       <br />
+      <Card/>      
     </>
   )
 }

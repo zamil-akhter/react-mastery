@@ -5,8 +5,9 @@ function App() {
 
   return (
     <>
-      <h2>React with tailwind and props</h2>
+      <h2 className="text-red-500">React with tailwind and props</h2>
       <br />
+      <hr/>
       <Card/>      
     </>
   )

@@ -1,9 +1,17 @@
+import { useState } from "react";
+import { BgChangerBar } from "./components/bg-changer-bar";
+
 function App() {
+  const [bgColour, setBgColour] = useState("olive");
+
+  const setValue = (c) => {
+    setBgColour(c);
+  };
 
   return (
-    <>
-      <h1 className="text-3xl font-extrabold text-red-300">Get started</h1>
-    </>
+    <div className="w-full h-screen" style={{ backgroundColor: bgColour }}>
+      <BgChangerBar onSelectColor={setValue} />
+    </div>
   );
 }
 

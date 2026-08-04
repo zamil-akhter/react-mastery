@@ -8,7 +8,7 @@ function App() {
   const [amount, setAmount] = useState(0);
   const [result, setResult] = useState(0);
 
-  const currencyInfo = useCurrencyInfo("usd");
+  const currencyInfo = useCurrencyInfo(from);
   console.log("currencyInfo -------->> ", currencyInfo);
 
   const currencyOptions = Object.keys(currencyInfo);

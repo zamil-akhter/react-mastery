@@ -1,6 +1,7 @@
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 import Layout from "./Layout";
-import { About, Contact, User, Home } from "./components";
+import { About, Contact, User, Home, Github } from "./components";
+import { githubProfileData } from "./components/Home/Github";
 
 // const router = createBrowserRouter([
 //   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
       <Route path="" element={<Home />} />
       <Route path="about" element={<About />} />
       <Route path="contact" element={<Contact />} />
+      <Route loader={githubProfileData} path="github/:userid" element={<Github />} />
       <Route path="user/:userid" element={<User />} />
     </Route>,
   ),

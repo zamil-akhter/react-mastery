@@ -4,13 +4,7 @@ import { useLoaderData } from "react-router-dom";
 
 export default function Github() {
   const githubData = useLoaderData();
-  // const { userid } = useParams("zamil-akhter");
-  // const [githubData, setGithubData] = useState([]);
-  // useEffect(() => {
-  //   fetch(`https://api.github.com/users/${userid}`)
-  //     .then((res) => res.json())
-  //     .then((data) => setGithubData(data));
-  // }, []);
+  const { avatar_url, followers, following, login, name, location, bio, public_repos } = githubData || {};
 
   console.log("data --->>> ", githubData);
   return (
@@ -18,11 +12,31 @@ export default function Github() {
       <div className="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
         <div className="space-y-6 md:space-y-0 md:flex md:gap-6 lg:items-center lg:gap-12">
           <div className="md:5/12 lg:w-5/12">
-            <img src={githubData.avatar_url} alt="image" />
+            <img src={avatar_url} alt={login || "GitHub avatar"} className="rounded-xl shadow-lg" />
           </div>
           <div className="md:7/12 lg:w-6/12">
-            <h2 className="text-2xl text-gray-900 font-bold md:text-4xl">Github Followers: {githubData.followers}</h2>
-            <p className="mt-6 text-gray-600">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum omnis voluptatem accusantium nemo perspiciatis delectus atque autem! Voluptatum tenetur beatae unde aperiam, repellat expedita consequatur! Officiis id consequatur atque doloremque!</p>
+            <h1 className="text-3xl text-gray-900 font-bold md:text-5xl">{name || login}</h1>
+            <p className="text-sm text-gray-500 mt-1">{login}</p>
+            {bio && <p className="mt-6 text-gray-600">{bio}</p>}
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-2xl border border-gray-200 bg-gray-50 p-5">
+                <p className="text-xs uppercase tracking-[0.2em] text-gray-500">Location</p>
+                <p className="mt-2 text-lg font-semibold text-gray-900">{location || "Not available"}</p>
+              </div>
+              <div className="rounded-2xl border border-gray-200 bg-gray-50 p-5">
+                <p className="text-xs uppercase tracking-[0.2em] text-gray-500">Public repos</p>
+                <p className="mt-2 text-lg font-semibold text-gray-900">{public_repos ?? 0}</p>
+              </div>
+              <div className="rounded-2xl border border-gray-200 bg-gray-50 p-5">
+                <p className="text-xs uppercase tracking-[0.2em] text-gray-500">Followers</p>
+                <p className="mt-2 text-lg font-semibold text-gray-900">{followers ?? 0}</p>
+              </div>
+              <div className="rounded-2xl border border-gray-200 bg-gray-50 p-5">
+                <p className="text-xs uppercase tracking-[0.2em] text-gray-500">Following</p>
+                <p className="mt-2 text-lg font-semibold text-gray-900">{following ?? 0}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

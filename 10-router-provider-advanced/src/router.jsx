@@ -2,6 +2,8 @@ import { createBrowserRouter, createRoutesFromElements, Route } from "react-rout
 import Layout from "./Layout";
 import { About, Contact, User, Home, Github } from "./components";
 import { githubProfileData } from "./components/Home/Github";
+import Followers, { followersLoader } from "./components/Home/Followers";
+import Following, { followingLoader } from "./components/Home/Following";
 
 // const router = createBrowserRouter([
 //   {
@@ -32,6 +34,8 @@ const router = createBrowserRouter(
       <Route path="about" element={<About />} />
       <Route path="contact" element={<Contact />} />
       <Route loader={githubProfileData} path="github/:userid" element={<Github />} />
+      <Route loader={followersLoader} path="github/:userid/followers" element={<Followers />} />
+      <Route loader={followingLoader} path="github/:userid/following" element={<Following />} />
       <Route path="user/:userid" element={<User />} />
     </Route>,
   ),

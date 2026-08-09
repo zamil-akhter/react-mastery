@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 
 export default function Github() {
+  const navigate = useNavigate();
   const githubData = useLoaderData();
   const { avatar_url, followers, following, login, name, location, bio, public_repos } = githubData || {};
 
@@ -36,6 +37,15 @@ export default function Github() {
                 <p className="text-xs uppercase tracking-[0.2em] text-gray-500">Following</p>
                 <p className="mt-2 text-lg font-semibold text-gray-900">{following ?? 0}</p>
               </div>
+            </div>
+
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+              <button type="button" onClick={() => navigate(`/github/${login}/followers`)} className="w-full rounded-full bg-blue-600 px-6 py-3 text-white shadow hover:bg-blue-700 sm:w-auto" disabled={followers === 0}>
+                View followers ({followers ?? 0})
+              </button>
+              <button type="button" onClick={() => navigate(`/github/${login}/following`)} className="w-full rounded-full border border-gray-300 bg-white px-6 py-3 text-gray-900 shadow-sm hover:bg-gray-100 sm:w-auto" disabled={following === 0}>
+                View following ({following ?? 0})
+              </button>
             </div>
           </div>
         </div>

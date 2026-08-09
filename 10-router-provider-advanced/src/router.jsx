@@ -1,6 +1,6 @@
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 import Layout from "./Layout";
-import { About, Contact, Home } from "./components";
+import { About, Contact, User, Home } from "./components";
 
 // const router = createBrowserRouter([
 //   {
@@ -30,6 +30,7 @@ const router = createBrowserRouter(
       <Route path="" element={<Home />} />
       <Route path="about" element={<About />} />
       <Route path="contact" element={<Contact />} />
+      <Route path="user/:userid" element={<User />} />
     </Route>,
   ),
 );

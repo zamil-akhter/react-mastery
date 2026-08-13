@@ -1,11 +1,17 @@
 import "./App.css";
+import Navbar from "./components/Navbar";
+import ThemeButton from "./components/ThemeButton";
 
 function App() {
   return (
-    <>
-      <h1>Theme Switcher</h1>
-      <p>Welcome to the Theme Switcher!</p>
-    </>
+    <div>
+      <Navbar />
+
+      <main>
+        <h1>Theme Switcher</h1>
+        <ThemeButton />
+      </main>
+    </div>
   );
 }
 

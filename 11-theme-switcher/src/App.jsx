@@ -1,10 +1,12 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
 import ThemeButton from "./components/ThemeButton";
+import { useThemeContext } from "./context/ThemeContextProvider";
 
 function App() {
+  const { theme } = useThemeContext();
   return (
-    <div>
+    <div className={`app ${theme}`}>
       <Navbar />
 
       <main>

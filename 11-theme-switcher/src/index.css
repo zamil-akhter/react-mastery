@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+.app {
+  min-height: 100vh;
+  transition: 0.3s;
+}
+.app.light {
+  background: #ffffff;
+  color: #111111;
+}
+.app.dark {
+  background: #111111;
+  color: #ffffff;
+}

@@ -5,6 +5,22 @@ import { TodoProvider } from "./context";
 function App() {
   const [todos, setTodos] = useState([]);
 
+  const addTodo = (todo) => {
+    setTodos((prevTodo) => [{ id: Date.now(), ...todo }, ...prevTodo]);
+  };
+
+  const editTodo = (id, todo) => {
+    setTodos((prev) => prev.map((prevTodo) => (prevTodo.id === id ? todo : prevTodo)));
+  };
+
+  const deleteTodo = (id) => {
+    setTodos((prevTodo) => prevTodo.filter((todo) => todo.id !== id));
+  };
+
+  const toggleComplete = (id) => {
+    setTodos((prevTodo) => prevTodo.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo)));
+  };
+
   return (
     <TodoProvider value={{ todos, addTodo, editTodo, deleteTodo, toggleComplete }}>
       <div className="bg-[#172842] min-h-screen py-8">

@@ -102,6 +102,25 @@ export class AppwriteService {
       throw error;
     }
   }
+
+  async deleteFile(fileId) {
+    try {
+      return await this.storage.deleteFile({
+        bucketId: config.appwriteBucketId,
+        fileId,
+      });
+    } catch (error) {
+      console.error("Error deleting file:", error);
+      throw error;
+    }
+  }
+
+  getFilePreview(fileId) {
+    return this.storage.getFilePreview({
+      bucketId: config.appwriteBucketId,
+      fileId,
+    });
+  }
 }
 
 const appwriteService = new AppwriteService();

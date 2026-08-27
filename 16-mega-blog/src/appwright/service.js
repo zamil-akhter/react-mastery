@@ -1,5 +1,5 @@
 import config from "../config/config.js";
-import { Client, Databases, Storage } from "appwrite";
+import { Client, TablesDB, Storage } from "appwrite";
 
 export class AppwriteService {
   client = new Client();
@@ -8,11 +8,29 @@ export class AppwriteService {
 
   constructor() {
     this.client.setEndpoint(config.appwriteUrl).setProject(config.appwriteProjectId);
-    this.database = new Databases(this.client);
+    this.tablesDB = new TablesDB(this.client);
     this.storage = new Storage(this.client);
   }
 
-  async createPost ({ title, slug, content, featuredImage, staus, userId}) {}
+  async createPost({ title, slug, content, featuredImage, staus, userId }) {
+    try {
+      return await this.tablesDB.createRow({
+        databaseId: config.appwriteDatabaseId,
+        tableId: config.appwriteCollectionId,
+        rowId: slug,
+        data: {
+          title,
+          content,
+          featuredImage,
+          staus,
+          userId,
+        },
+      });
+    } catch (error) {
+      console.error("Error creating post:", error);
+      throw error;
+    }
+  }
 }
 
 const appwriteService = new AppwriteService();

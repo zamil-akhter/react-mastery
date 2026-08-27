@@ -88,6 +88,20 @@ export class AppwriteService {
       throw error;
     }
   }
+
+  // File upload method
+  async uploadFile(file) {
+    try {
+      return await this.storage.createFile({
+        bucketId: config.appwriteBucketId,
+        ID: "unique()",
+        file,
+      });
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      throw error;
+    }
+  }
 }
 
 const appwriteService = new AppwriteService();

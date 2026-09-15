@@ -6,14 +6,14 @@ function Home() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    appwriteService.getPost().then((posts) => {
+    appwriteService.getAllPosts().then((posts) => {
       if (posts) {
-        setPosts(posts.documents);
+        setPosts(posts.rows);
       }
     });
   }, []);
 
-  if (posts.length === 0) {
+  if (posts?.length === 0) {
     return (
       <div className="w-full py-8 mt-4 text-center">
         <Container>

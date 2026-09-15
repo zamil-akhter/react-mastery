@@ -31,13 +31,13 @@ function Header() {
                   <button onClick={() => navigate(item.slug)} className="inline-block px-6 py-2 duration-200 rounded-full hover:bg-blue-100">
                     {item.name}
                   </button>
-                  {authStatus && (
-                    <li>
-                      <LogoutBtn />
-                    </li>
-                  )}
                 </li>
               ) : null,
+            )}
+            {authStatus && (
+              <li>
+                <LogoutBtn />
+              </li>
             )}
           </ul>
         </nav>

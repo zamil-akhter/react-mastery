@@ -16,7 +16,7 @@ export class AppwriteService {
     try {
       return await this.tablesDB.createRow({
         databaseId: config.appwriteDatabaseId,
-        tableId: config.appwriteCollectionId,
+        tableId: config.appwriteTableId,
         rowId: slug,
         data: {
           title,
@@ -36,7 +36,7 @@ export class AppwriteService {
     try {
       return await this.tablesDB.updateRow({
         databaseId: config.appwriteDatabaseId,
-        tableId: config.appwriteCollectionId,
+        tableId: config.appwriteTableId,
         rowId: slug,
         data: {
           title,
@@ -55,7 +55,7 @@ export class AppwriteService {
     try {
       return await this.tablesDB.deleteRow({
         databaseId: config.appwriteDatabaseId,
-        tableId: config.appwriteCollectionId,
+        tableId: config.appwriteTableId,
         rowId: slug,
       });
     } catch (error) {
@@ -68,7 +68,7 @@ export class AppwriteService {
     try {
       return await this.tablesDB.getRow({
         databaseId: config.appwriteDatabaseId,
-        tableId: config.appwriteCollectionId,
+        tableId: config.appwriteTableId,
         rowId: slug,
       });
     } catch (error) {
@@ -81,7 +81,7 @@ export class AppwriteService {
     try {
       return await this.tablesDB.listRows({
         databaseId: config.appwriteDatabaseId,
-        tableId: config.appwriteCollectionId,
+        tableId: config.appwriteTableId,
       });
     } catch (error) {
       console.error("Error fetching all posts:", error);

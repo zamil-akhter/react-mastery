@@ -16,7 +16,7 @@ function App() {
       .then((userData) => {
         if (userData) {
           console.log("Logged in user:", userData);
-          dispatch(login({ userData }));
+          dispatch(login(userData));
         } else {
           console.log("No user is currently logged in.");
           dispatch(logout());

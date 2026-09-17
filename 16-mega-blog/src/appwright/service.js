@@ -12,7 +12,7 @@ export class AppwriteService {
     this.storage = new Storage(this.client);
   }
 
-  async createPost({ title, slug, content, featuredImage, staus, userId }) {
+  async createPost({ title, slug, content, featuredImage, status, userId }) {
     try {
       return await this.tablesDB.createRow({
         databaseId: config.appwriteDatabaseId,
@@ -22,7 +22,7 @@ export class AppwriteService {
           title,
           content,
           featuredImage,
-          staus,
+          status,
           userId,
         },
       });
@@ -94,7 +94,7 @@ export class AppwriteService {
     try {
       return await this.storage.createFile({
         bucketId: config.appwriteBucketId,
-        ID: "unique()",
+        fileId: "unique()",
         file,
       });
     } catch (error) {

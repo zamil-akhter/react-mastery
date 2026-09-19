@@ -8,7 +8,7 @@ function Home() {
   useEffect(() => {
     appwriteService.getAllPosts().then((posts) => {
       if (posts) {
-        setPosts(posts.rows);
+        setPosts(posts.rows || posts.documents || []);
       }
     });
   }, []);

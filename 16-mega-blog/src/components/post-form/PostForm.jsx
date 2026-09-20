@@ -79,64 +79,63 @@ function PostForm({ post }) {
   }, [watch, slugTransform, setValue]);
 
     return (
-      <form onSubmit={handleSubmit(submitPost)} className="flex flex-wrap">
-        <div className="w-2/3 px-2">
-          <Input
-            label="Title :"
-            placeholder="Title"
-            className="mb-4"
-            {...register("title", { required: true })}
-          />
-          <Input
-            label="Slug :"
-            placeholder="Slug"
-            className="mb-4"
-            {...register("slug", { required: true })}
-            onInput={(e) => {
-              setValue("slug", slugTransform(e.currentTarget.value), {
-                shouldValidate: true,
-              });
-            }}
-          />
-          <RealTimeEditor
-            label="Content :"
-            name="content"
-            control={control}
-            defaultValue={getValues("content")}
-          />
+      <form onSubmit={handleSubmit(submitPost)} className="flex flex-wrap -mx-3">
+        <div className="w-full lg:w-2/3 px-3 mb-6 lg:mb-0">
+          <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs space-y-4">
+            <Input
+              label="Title :"
+              placeholder="Enter post title"
+              {...register("title", { required: true })}
+            />
+            <Input
+              label="Slug :"
+              placeholder="post-slug"
+              {...register("slug", { required: true })}
+              onInput={(e) => {
+                setValue("slug", slugTransform(e.currentTarget.value), {
+                  shouldValidate: true,
+                });
+              }}
+            />
+            <RealTimeEditor
+              label="Content :"
+              name="content"
+              control={control}
+              defaultValue={getValues("content")}
+            />
+          </div>
         </div>
 
-        <div className="w-1/3 px-2">
-          <Input
-            label="Featured Image :"
-            type="file"
-            className="mb-4"
-            accept="image/png, image/jpg, image/jpeg, image/gif"
-            {...register("image", { required: !post })}
-          />
-          {post && (
-            <div className="w-full mb-4">
-              <img
-                src={appwriteService.getFilePreview(post.featuredImage)}
-                alt={post.title}
-                className="rounded-lg"
-              />
-            </div>
-          )}
-          <Select
-            options={["active", "inactive"]}
-            label="Status"
-            className="mb-4"
-            {...register("status", { required: true })}
-          />
-          <Button
-            type="submit"
-            bgColor={post ? "bg-green-500" : undefined}
-            className="w-full"
-            onClick={handleSubmit(submitPost)}
-          >
-            {post ? "Update" : "Submit"}
-          </Button>
+        <div className="w-full lg:w-1/3 px-3">
+          <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs space-y-4">
+            <Input
+              label="Featured Image :"
+              type="file"
+              accept="image/png, image/jpg, image/jpeg, image/gif"
+              {...register("image", { required: !post })}
+            />
+            {post && (
+              <div className="w-full overflow-hidden rounded-xl bg-slate-100 border border-slate-200/60">
+                <img
+                  src={appwriteService.getFilePreview(post.featuredImage)}
+                  alt={post.title}
+                  className="w-full h-auto object-cover rounded-xl"
+                />
+              </div>
+            )}
+            <Select
+              options={["active", "inactive"]}
+              label="Status"
+              {...register("status", { required: true })}
+            />
+            <Button
+              type="submit"
+              bgColor={post ? "bg-emerald-600 hover:bg-emerald-700" : undefined}
+              className="w-full mt-2"
+            >
+              {post ? "Update Post" : "Publish Post"}
+            </Button>
+          </div>
         </div>
       </form>
     );

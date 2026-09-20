@@ -27,21 +27,23 @@ function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center w-full">
-      <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
-        <div className="mb-2 flex justify-center">
-          <span className="inline-block w-full max-w-25">
-            <Logo width="100%" />
-          </span>
+    <div className="flex items-center justify-center w-full py-8">
+      <div className="mx-auto w-full max-w-lg bg-white rounded-2xl p-8 sm:p-10 border border-slate-200/80 shadow-xl shadow-slate-200/50">
+        <div className="mb-4 flex justify-center">
+          <Logo width="auto" />
         </div>
-        <h2 className="text-center text-2xl font-bold leading-tight">Sign in to your account</h2>
-        <p className="mt-2 text-center text-base text-black/60">
-          Don&apos;t have any account?&nbsp;
-          <Link to="/signup" className="font-medium text-primary transition-all duration-200 hover:underline">
+        <h2 className="text-center text-2xl font-bold tracking-tight text-slate-900">Sign in to your account</h2>
+        <p className="mt-2 text-center text-sm text-slate-500">
+          Don&apos;t have an account?&nbsp;
+          <Link to="/signup" className="font-semibold text-indigo-600 hover:text-indigo-700 transition-colors duration-200 hover:underline">
             Sign Up
           </Link>
         </p>
-        {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+        {error && (
+          <div className="mt-6 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 text-sm font-medium text-center">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit(login)} className="mt-8">
           <div className="space-y-5">

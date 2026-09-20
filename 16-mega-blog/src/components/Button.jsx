@@ -1,8 +1,19 @@
 import React from "react";
 
-function Button({ children, type = "button", bgColor = "bg-blue-600", textColor = "text-white", className = "", ...props }) {
+function Button({
+  children,
+  type = "button",
+  bgColor = "bg-indigo-600 hover:bg-indigo-700",
+  textColor = "text-white",
+  className = "",
+  ...props
+}) {
   return (
-    <button className={`px-4 py-2 rounded-lg ${bgColor} ${textColor} ${className}`} {...props}>
+    <button
+      type={type}
+      className={`cursor-pointer px-5 py-2.5 rounded-xl font-medium shadow-xs hover:shadow transition-all duration-200 active:scale-[0.98] ${bgColor} ${textColor} ${className}`}
+      {...props}
+    >
       {children}
     </button>
   );

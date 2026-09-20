@@ -21,8 +21,16 @@ function EditPost() {
   }, [slug, navigate]);
 
   return post ? (
-    <div className="py-8">
+    <div className="py-10">
       <Container>
+        <div className="mb-8">
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+            Edit Post
+          </h1>
+          <p className="text-slate-500 text-sm mt-1">
+            Update your article details and save changes.
+          </p>
+        </div>
         <PostForm post={post} />
       </Container>
     </div>

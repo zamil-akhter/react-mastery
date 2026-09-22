@@ -1,20 +1,51 @@
 import config from "../config/config.js";
 import { Client, TablesDB, Storage } from "appwrite";
+import { toast } from "react-toastify";
 
 export class AppwriteService {
   client = new Client();
-  database;
+  tablesDB;
   storage;
 
   constructor() {
-    this.client.setEndpoint(config.appwriteUrl).setProject(config.appwriteProjectId);
+    this.client
+      .setEndpoint(config.appwriteUrl)
+      .setProject(config.appwriteProjectId);
+
     this.tablesDB = new TablesDB(this.client);
     this.storage = new Storage(this.client);
   }
 
+  // Common error handler
+  handleError(error, defaultMessage) {
+    console.error(defaultMessage, error);
+
+    switch (error?.code) {
+      case 401:
+        toast.error("Please login to continue.");
+        break;
+
+      case 403:
+        toast.error("You are not authorized to perform this action.");
+        break;
+
+      case 404:
+        toast.error("Requested resource was not found.");
+        break;
+
+      case 409:
+        toast.error("This resource already exists.");
+        break;
+
+      default:
+        toast.error(error?.message || defaultMessage);
+    }
+  }
+
+  // Create Post
   async createPost({ title, slug, content, featuredImage, status, userId }) {
     try {
-      return await this.tablesDB.createRow({
+      const response = await this.tablesDB.createRow({
         databaseId: config.appwriteDatabaseId,
         tableId: config.appwriteTableId,
         rowId: slug,
@@ -26,15 +57,25 @@ export class AppwriteService {
           userId,
         },
       });
+
+      toast.success("Post created successfully.");
+
+      return response;
     } catch (error) {
-      console.error("Error creating post:", error);
+      if (error?.code === 409) {
+        toast.error("This slug already exists. Please use a different slug.");
+      } else {
+        this.handleError(error, "Failed to create post.");
+      }
+
       throw error;
     }
   }
 
-  async updatePost({ slug, title, content, featuredImage, staus }) {
+  // Update Post
+  async updatePost({ slug, title, content, featuredImage, status }) {
     try {
-      return await this.tablesDB.updateRow({
+      const response = await this.tablesDB.updateRow({
         databaseId: config.appwriteDatabaseId,
         tableId: config.appwriteTableId,
         rowId: slug,
@@ -42,28 +83,50 @@ export class AppwriteService {
           title,
           content,
           featuredImage,
-          staus,
+          status,
         },
       });
+
+      toast.success("Post updated successfully.");
+
+      return response;
     } catch (error) {
-      console.error("Error updating post:", error);
+      if (error?.code === 404) {
+        toast.error("Post not found.");
+      } else if (error?.code === 409) {
+        toast.error("This slug already exists. Please use a different slug.");
+      } else {
+        this.handleError(error, "Failed to update post.");
+      }
+
       throw error;
     }
   }
 
+  // Delete Post
   async deletePost(slug) {
     try {
-      return await this.tablesDB.deleteRow({
+      const response = await this.tablesDB.deleteRow({
         databaseId: config.appwriteDatabaseId,
         tableId: config.appwriteTableId,
         rowId: slug,
       });
+
+      toast.success("Post deleted successfully.");
+
+      return response;
     } catch (error) {
-      console.error("Error deleting post:", error);
+      if (error?.code === 404) {
+        toast.error("Post not found.");
+      } else {
+        this.handleError(error, "Failed to delete post.");
+      }
+
       throw error;
     }
   }
 
+  // Get Single Post
   async getPost(slug) {
     try {
       return await this.tablesDB.getRow({
@@ -72,49 +135,72 @@ export class AppwriteService {
         rowId: slug,
       });
     } catch (error) {
-      console.error("Error fetching post:", error);
+      if (error?.code === 404) {
+        toast.error("Post not found.");
+      } else {
+        this.handleError(error, "Failed to fetch post.");
+      }
+
       throw error;
     }
   }
 
+  // Get All Posts
   async getAllPosts() {
     try {
-      return await this.tablesDB.listRows({
+      const response = await this.tablesDB.listRows({
         databaseId: config.appwriteDatabaseId,
         tableId: config.appwriteTableId,
       });
+
+      return response;
     } catch (error) {
-      console.error("Error fetching all posts:", error);
+      this.handleError(error, "Failed to fetch posts.");
       throw error;
     }
   }
 
-  // File upload method
+  // Upload File
   async uploadFile(file) {
     try {
-      return await this.storage.createFile({
+      const response = await this.storage.createFile({
         bucketId: config.appwriteBucketId,
         fileId: "unique()",
         file,
       });
+
+      toast.success("Image uploaded successfully.");
+
+      return response;
     } catch (error) {
-      console.error("Error uploading file:", error);
+      this.handleError(error, "Failed to upload image.");
       throw error;
     }
   }
 
+  // Delete File
   async deleteFile(fileId) {
     try {
-      return await this.storage.deleteFile({
+      const response = await this.storage.deleteFile({
         bucketId: config.appwriteBucketId,
         fileId,
       });
+
+      toast.success("Image deleted successfully.");
+
+      return response;
     } catch (error) {
-      console.error("Error deleting file:", error);
+      if (error?.code === 404) {
+        toast.error("Image not found.");
+      } else {
+        this.handleError(error, "Failed to delete image.");
+      }
+
       throw error;
     }
   }
 
+  // Get File
   getFilePreview(fileId) {
     return this.storage.getFileView({
       bucketId: config.appwriteBucketId,
@@ -124,4 +210,5 @@ export class AppwriteService {
 }
 
 const appwriteService = new AppwriteService();
+
 export default appwriteService;

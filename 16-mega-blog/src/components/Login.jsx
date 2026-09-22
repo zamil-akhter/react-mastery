@@ -5,7 +5,8 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { login as storeLogin } from "../store/authSlice";
 import authService from "../appwright/auth";
-
+import { toast } from "react-toastify";
+  
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -19,10 +20,12 @@ function Login() {
       if (session) {
         const userData = await authService.getCurrentUser();
         if (userData) dispatch(storeLogin(userData));
+        toast.success("Logged in successfully!");
         navigate("/");
       }
     } catch (error) {
       setError(error.message);
+      toast.error("Login failed");
     }
   };
 

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import authService from "../appwright/auth";
 import { login } from "../store/authSlice";
+import { toast } from "react-toastify";
 
 function Signup() {
   const navigate = useNavigate();
@@ -19,10 +20,12 @@ function Signup() {
       if (userData) {
         const userData = await authService.getCurrentUser();
         if (userData) dispatch(login(userData));
+        toast.success("Your account has been successfully created");
         navigate("/");
       }
     } catch (error) {
       setError(error.message);
+      toast.error(error.message || "Signup failed");
     }
   };
 

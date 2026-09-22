@@ -24,7 +24,7 @@ function Home() {
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               Welcome to{" "}
-              <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
                 MegaBlog
               </span>
             </h1>

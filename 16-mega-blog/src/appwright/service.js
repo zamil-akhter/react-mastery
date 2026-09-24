@@ -146,12 +146,20 @@ export class AppwriteService {
   }
 
   // Get All Posts
-  async getAllPosts() {
+  async getAllPosts(isSelfPostsOnly = false, userId = null) {
+    const options = {
+      databaseId: config.appwriteDatabaseId,
+      tableId: config.appwriteTableId,
+    };
+    console.log("Options before filtering:", options);
+
+    if (isSelfPostsOnly && userId) {
+      options.userId = userId;
+    }
+
+    console.log("Options later ---- ", options);
     try {
-      const response = await this.tablesDB.listRows({
-        databaseId: config.appwriteDatabaseId,
-        tableId: config.appwriteTableId,
-      });
+      const response = await this.tablesDB.listRows(options);
 
       return response;
     } catch (error) {

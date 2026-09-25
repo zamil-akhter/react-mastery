@@ -50,6 +50,7 @@ function Home() {
       </div>
     );
   }
+  console.log("Posts ----------- ", posts);
 
   return (
     <div className="w-full py-10">
@@ -65,7 +66,7 @@ function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {posts.map((post) => (
             <div key={post.$id} className="h-full">
-              <PostCard {...post} />
+              <PostCard {...post} isHomePage={true} />
             </div>
           ))}
         </div>

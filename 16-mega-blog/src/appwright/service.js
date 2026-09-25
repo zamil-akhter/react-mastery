@@ -156,9 +156,10 @@ export class AppwriteService {
     console.log("Options before filtering:", options);
 
     if (isSelfPostsOnly && userId) {
-      options.queries = [Query.equal("userId", userId)];
+      options.queries.push(Query.equal("userId", userId));
+    } else {
+      options.queries.push(Query.equal("status", "active"));
     }
-
     console.log("Options later:", options);
 
     try {

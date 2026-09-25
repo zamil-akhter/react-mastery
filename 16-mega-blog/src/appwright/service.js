@@ -1,5 +1,5 @@
 import config from "../config/config.js";
-import { Client, TablesDB, Storage } from "appwrite";
+import { Client, TablesDB, Storage, Query } from "appwrite";
 import { toast } from "react-toastify";
 
 export class AppwriteService {
@@ -150,14 +150,17 @@ export class AppwriteService {
     const options = {
       databaseId: config.appwriteDatabaseId,
       tableId: config.appwriteTableId,
+      queries: [Query.orderDesc("$createdAt")],
     };
+
     console.log("Options before filtering:", options);
 
     if (isSelfPostsOnly && userId) {
-      options.userId = userId;
+      options.queries = [Query.equal("userId", userId)];
     }
 
-    console.log("Options later ---- ", options);
+    console.log("Options later:", options);
+
     try {
       const response = await this.tablesDB.listRows(options);
 

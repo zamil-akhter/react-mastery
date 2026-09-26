@@ -87,8 +87,6 @@ export class AppwriteService {
         },
       });
 
-      toast.success("Post updated successfully.");
-
       return response;
     } catch (error) {
       if (error?.code === 404) {
@@ -168,6 +166,27 @@ export class AppwriteService {
       return response;
     } catch (error) {
       this.handleError(error, "Failed to fetch posts.");
+      throw error;
+    }
+  }
+
+  async activeTogglePost(slug) {
+    try {
+      const post = await this.getPost(slug);
+      const newStatus = post.status === "active" ? "inactive" : "active";
+      const response = await this.updatePost({
+        slug,
+        ...post,
+        status: newStatus,
+      });
+
+      if (response) {
+        return response;
+      }
+
+      throw new Error("Failed to toggle post status.");
+    } catch (error) {
+      this.handleError(error, "Failed to toggle post status.");
       throw error;
     }
   }

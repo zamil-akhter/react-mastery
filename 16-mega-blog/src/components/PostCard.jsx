@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import appwriteService from "../appwright/service";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -11,6 +12,7 @@ function PostCard({
   status = "active",
   isHomePage = true,
   showActions = false,
+  onDelete,
 }) {
   const imageUrl = appwriteService.getFilePreview(featuredImage);
   const userData = useSelector((state) => state.auth.user || state.auth.userData);
@@ -20,6 +22,9 @@ function PostCard({
   );
   const [isActive, setIsActive] = useState(status === "active");
   const [isToggling, setIsToggling] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const handleToggleStatus = async (e) => {
     e.preventDefault();
@@ -39,8 +44,31 @@ function PostCard({
     }
   };
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isDeleting) return;
+
+    setIsDeleting(true);
+    try {
+      await appwriteService.deletePost($id);
+      setIsDeleted(true);
+      setShowDeleteModal(false);
+      if (onDelete) {
+        onDelete($id);
+      }
+    } catch (error) {
+      console.error("Failed to delete post:", error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  if (isDeleted) return null;
+
   return (
-    <Link to={`/post/${$id}`} className="group block h-full">
+    <>
+      <Link to={`/post/${$id}`} className="group block h-full">
       <div className="h-full bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col">
         <div className="relative w-full h-44 overflow-hidden rounded-xl bg-slate-100 mb-4 flex items-center justify-center">
           {isHomePage && isOwnPost && (
@@ -113,7 +141,7 @@ function PostCard({
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log("Delete clicked for post:", $id);
+                setShowDeleteModal(true);
               }}
               className="cursor-pointer p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
               title="Delete post"
@@ -136,6 +164,80 @@ function PostCard({
         )}
       </div>
     </Link>
+
+    {/* Delete Confirmation Popup Modal */}
+    {showDeleteModal &&
+      createPortal(
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-xs p-4 animate-fade-in"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!isDeleting) setShowDeleteModal(false);
+          }}
+        >
+          <div
+            className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center shrink-0 text-rose-600">
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg font-bold text-slate-900">Delete Post</h3>
+                <p className="text-sm text-slate-500 mt-1">
+                  Are you sure you want to delete{" "}
+                  <span className="font-semibold text-slate-800 break-words">
+                    &ldquo;{title}&rdquo;
+                  </span>
+                  ? This action cannot be undone.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-end gap-3">
+              <button
+                type="button"
+                disabled={isDeleting}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setShowDeleteModal(false);
+                }}
+                className="cursor-pointer px-4 py-2 rounded-xl text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={isDeleting}
+                onClick={handleDelete}
+                className="cursor-pointer px-4 py-2 rounded-xl text-sm font-semibold text-white bg-rose-600 hover:bg-rose-700 transition-colors disabled:opacity-50 flex items-center gap-2"
+              >
+                {isDeleting ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+  </>
   );
 }
 

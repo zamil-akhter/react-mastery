@@ -38,7 +38,16 @@ function AllPosts() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {posts?.map((post) => (
               <div key={post.$id} className="h-full">
-                <PostCard {...post} isHomePage={false} showActions={true} />
+                <PostCard
+                  {...post}
+                  isHomePage={false}
+                  showActions={true}
+                  onDelete={(deletedId) => {
+                    setPosts((prevPosts) =>
+                      prevPosts.filter((p) => p.$id !== deletedId)
+                    );
+                  }}
+                />
               </div>
             ))}
           </div>

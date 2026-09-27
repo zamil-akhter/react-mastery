@@ -104,11 +104,19 @@ export class AppwriteService {
   // Delete Post
   async deletePost(slug) {
     try {
+      // Get post first so we have featuredImage
+      const post = await this.getPost(slug);
+
       const response = await this.tablesDB.deleteRow({
         databaseId: config.appwriteDatabaseId,
         tableId: config.appwriteTableId,
         rowId: slug,
       });
+
+      // Delete featured image if exists
+      if (post?.featuredImage) {
+        await this.deleteFile(post.featuredImage);
+      }
 
       toast.success("Post deleted successfully.");
 

@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import appwriteService from "../appwright/service";
 import { Container, PostCard } from "../components";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Home() {
+  const authStatus = useSelector((state) => state.auth.status);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -31,20 +33,22 @@ function Home() {
             <p className="mt-4 text-slate-600 text-base sm:text-lg leading-relaxed">
               Explore stories, ideas, and expertise from creators around the globe. Log in or create an account to start publishing and reading posts!
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <Link
-                to="/login"
-                className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-md shadow-indigo-500/20 hover:shadow-lg transition-all duration-200"
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/signup"
-                className="px-6 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition-all duration-200"
-              >
-                Create Account
-              </Link>
-            </div>
+            {!authStatus && (
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+                <Link
+                  to="/login"
+                  className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-md shadow-indigo-500/20 hover:shadow-lg transition-all duration-200"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/signup"
+                  className="px-6 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition-all duration-200"
+                >
+                  Create Account
+                </Link>
+              </div>
+            )}
           </div>
         </Container>
       </div>

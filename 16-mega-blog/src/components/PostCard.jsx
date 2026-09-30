@@ -203,7 +203,7 @@ function PostCard({
                 <h3 className="text-lg font-bold text-slate-900">Delete Post</h3>
                 <p className="text-sm text-slate-500 mt-1">
                   Are you sure you want to delete{" "}
-                  <span className="font-semibold text-slate-800 break-words">
+                  <span className="font-semibold text-slate-800 wrap-break-words">
                     &ldquo;{title}&rdquo;
                   </span>
                   ? This action cannot be undone.

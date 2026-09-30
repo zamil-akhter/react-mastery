@@ -2,6 +2,7 @@ import { Container, Logo, LogoutBtn } from "../index";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useThemeContext } from "../../context/ThemeContextProvider";
 
 function Header() {
   const authStatus = useSelector((state) => state.auth.status);
@@ -14,6 +15,8 @@ function Header() {
     { name: "My Posts", slug: "/all-posts", active: authStatus },
     { name: "Add Post", slug: "/add-post", active: authStatus },
   ];
+
+  const { theme, toggleTheme } = useThemeContext();
 
   return (
     <header className="sticky top-0 z-50 py-3 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
@@ -40,11 +43,11 @@ function Header() {
               </li>
             )}
             <li className="ml-2">
-              <button className="relative inline-flex h-8 w-14 items-center rounded-full bg-gray-200 p-1 transition-colors duration-300 focus:outline-none dark:bg-gray-700" aria-label="Toggle dark mode">
+              <button onClick={toggleTheme} className="relative inline-flex h-8 w-14 items-center rounded-full bg-gray-200 p-1 transition-colors duration-300 focus:outline-none dark:bg-gray-700" aria-label="Toggle dark mode">
                 {/* Switch knob */}
-                <span className={`flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-md transition-transform duration-300 ${true === "dark" ? "translate-x-6" : "translate-x-0"}`}>
+                <span className={`flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-md transition-transform duration-300 ${theme === "dark" ? "translate-x-6" : "translate-x-0"}`}>
                   {/* SVG Icons change inside the knob */}
-                  {true === "dark" ? (
+                  {theme === "dark" ? (
                     // Moon Icon
                     <svg className="h-4 w-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />

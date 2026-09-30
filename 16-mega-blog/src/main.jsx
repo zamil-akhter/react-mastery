@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthLayout } from "./components/index.js";
 
 import { Signup, Login, AllPosts, Post, Home, AddPost, EditPost } from "./pages";
+import { ThemeContextProvider } from "./context/ThemeContextProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -72,7 +73,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <ThemeContextProvider>
+        <RouterProvider router={router} />
+      </ThemeContextProvider>
     </Provider>
   </StrictMode>,
 );

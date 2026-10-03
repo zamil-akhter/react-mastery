@@ -19,7 +19,7 @@ function Header() {
   const { theme, toggleTheme } = useThemeContext();
 
   return (
-    <header className="sticky top-0 z-50 py-3 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
+    <header className="sticky top-0 z-50 py-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 shadow-xs transition-colors duration-200">
       <Container>
         <nav className="flex items-center">
           <div className="mr-6">
@@ -31,7 +31,10 @@ function Header() {
             {navItems.map((item) =>
               item.active ? (
                 <li key={item.slug}>
-                  <button onClick={() => navigate(item.slug)} className="cursor-pointer inline-block px-4 py-2 text-sm font-medium rounded-xl text-slate-700 hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-200">
+                  <button
+                    onClick={() => navigate(item.slug)}
+                    className="cursor-pointer inline-block px-4 py-2 text-sm font-medium rounded-xl text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-slate-800 transition-all duration-200"
+                  >
                     {item.name}
                   </button>
                 </li>
@@ -43,13 +46,21 @@ function Header() {
               </li>
             )}
             <li className="ml-2">
-              <button onClick={toggleTheme} className="relative inline-flex h-8 w-14 items-center rounded-full bg-gray-200 p-1 transition-colors duration-300 focus:outline-none dark:bg-gray-700" aria-label="Toggle dark mode">
+              <button
+                onClick={toggleTheme}
+                className="relative inline-flex h-8 w-14 cursor-pointer items-center rounded-full bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 p-1 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+                aria-label="Toggle dark mode"
+              >
                 {/* Switch knob */}
-                <span className={`flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-md transition-transform duration-300 ${theme === "dark" ? "translate-x-6" : "translate-x-0"}`}>
+                <span
+                  className={`flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-slate-950 shadow-md transition-transform duration-300 ${
+                    theme === "dark" ? "translate-x-6" : "translate-x-0"
+                  }`}
+                >
                   {/* SVG Icons change inside the knob */}
                   {theme === "dark" ? (
                     // Moon Icon
-                    <svg className="h-4 w-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-3.5 w-3.5 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
                     </svg>
                   ) : (

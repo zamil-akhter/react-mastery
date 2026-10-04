@@ -95,7 +95,7 @@ function PostForm({ post }) {
   return (
     <form onSubmit={handleSubmit(submitPost)} className="flex flex-wrap -mx-3">
       <div className="w-full lg:w-2/3 px-3 mb-6 lg:mb-0">
-        <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs space-y-4">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-4">
           <Input
             label="Title :"
             placeholder="Enter post title"
@@ -121,7 +121,7 @@ function PostForm({ post }) {
       </div>
 
       <div className="w-full lg:w-1/3 px-3">
-        <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs space-y-4">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-4">
           <Input
             label="Featured Image :"
             type="file"
@@ -129,7 +129,7 @@ function PostForm({ post }) {
             {...register("image", { required: !post })}
           />
           {post && (
-            <div className="w-full overflow-hidden rounded-xl bg-slate-100 border border-slate-200/60">
+            <div className="w-full overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60">
               <img
                 src={appwriteService.getFilePreview(post.featuredImage)}
                 alt={post.title}

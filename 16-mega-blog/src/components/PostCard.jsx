@@ -69,8 +69,8 @@ function PostCard({
   return (
     <>
       <Link to={`/post/${$id}`} className="group block h-full">
-      <div className="h-full bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col">
-        <div className="relative w-full h-44 overflow-hidden rounded-xl bg-slate-100 mb-4 flex items-center justify-center">
+      <div className="h-full bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-xl dark:hover:shadow-slate-950/50 transition-all duration-300 hover:-translate-y-1 flex flex-col">
+        <div className="relative w-full h-44 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 mb-4 flex items-center justify-center">
           {isHomePage && isOwnPost && (
             <span className="absolute top-2.5 right-2.5 z-10 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-600/95 text-white shadow-md backdrop-blur-xs">
               <svg
@@ -95,13 +95,13 @@ function PostCard({
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         </div>
-        <h2 className="text-lg font-bold text-slate-800 group-hover:text-indigo-600 transition-colors line-clamp-2">
+        <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2">
           {title}
         </h2>
 
         {/* Action Bar: Status Toggle & Delete Button (Only for My Posts section) */}
         {showActions && (
-          <div className="mt-auto pt-3 flex items-center justify-between border-t border-slate-100">
+          <div className="mt-auto pt-3 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
             {/* Status Toggle UI */}
             <div
               className="flex items-center gap-2"
@@ -117,7 +117,7 @@ function PostCard({
                 className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
                   isToggling ? "opacity-60 cursor-wait" : ""
                 } ${
-                  isActive ? "bg-emerald-500" : "bg-slate-300"
+                  isActive ? "bg-emerald-500" : "bg-slate-300 dark:bg-slate-700"
                 }`}
               >
                 <span
@@ -128,7 +128,7 @@ function PostCard({
               </button>
               <span
                 className={`text-xs font-semibold select-none ${
-                  isActive ? "text-emerald-600" : "text-slate-400"
+                  isActive ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400 dark:text-slate-500"
                 }`}
               >
                 {isToggling ? "Updating..." : isActive ? "Active" : "Inactive"}
@@ -143,7 +143,7 @@ function PostCard({
                 e.stopPropagation();
                 setShowDeleteModal(true);
               }}
-              className="cursor-pointer p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+              className="cursor-pointer p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 transition-colors"
               title="Delete post"
             >
               <svg
@@ -169,7 +169,7 @@ function PostCard({
     {showDeleteModal &&
       createPortal(
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-xs p-4 animate-fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-xs p-4 animate-fade-in"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -177,14 +177,14 @@ function PostCard({
           }}
         >
           <div
-            className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200"
+            className="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
             }}
           >
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center shrink-0 text-rose-600">
+              <div className="w-12 h-12 rounded-full bg-rose-100 dark:bg-rose-950/60 flex items-center justify-center shrink-0 text-rose-600 dark:text-rose-400">
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -200,10 +200,10 @@ function PostCard({
                 </svg>
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-lg font-bold text-slate-900">Delete Post</h3>
-                <p className="text-sm text-slate-500 mt-1">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Delete Post</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                   Are you sure you want to delete{" "}
-                  <span className="font-semibold text-slate-800 wrap-break-words">
+                  <span className="font-semibold text-slate-800 dark:text-slate-200 wrap-break-words">
                     &ldquo;{title}&rdquo;
                   </span>
                   ? This action cannot be undone.
@@ -220,7 +220,7 @@ function PostCard({
                   e.stopPropagation();
                   setShowDeleteModal(false);
                 }}
-                className="cursor-pointer px-4 py-2 rounded-xl text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors disabled:opacity-50"
+                className="cursor-pointer px-4 py-2 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>

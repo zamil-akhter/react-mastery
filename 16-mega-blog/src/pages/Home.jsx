@@ -20,17 +20,17 @@ function Home() {
     return (
       <div className="w-full py-16 text-center">
         <Container>
-          <div className="max-w-2xl mx-auto bg-white rounded-3xl p-10 md:p-14 border border-slate-200/80 shadow-xl shadow-slate-200/40">
-            <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-indigo-50 flex items-center justify-center text-3xl">
+          <div className="max-w-2xl mx-auto bg-white dark:bg-slate-900 rounded-3xl p-10 md:p-14 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/40 dark:shadow-none">
+            <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center text-3xl">
               ✍️
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               Welcome to{" "}
-              <span className="bg-linear-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent">
                 MegaBlog
               </span>
             </h1>
-            <p className="mt-4 text-slate-600 text-base sm:text-lg leading-relaxed">
+            <p className="mt-4 text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed">
               Explore stories, ideas, and expertise from creators around the globe. Log in or create an account to start publishing and reading posts!
             </p>
             {!authStatus && (
@@ -43,7 +43,7 @@ function Home() {
                 </Link>
                 <Link
                   to="/signup"
-                  className="px-6 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition-all duration-200"
+                  className="px-6 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold transition-all duration-200"
                 >
                   Create Account
                 </Link>
@@ -60,10 +60,10 @@ function Home() {
     <div className="w-full py-10">
       <Container>
         <div className="mb-8">
-          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Latest Articles
           </h1>
-          <p className="text-slate-500 text-sm mt-1">
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
             Discover the freshest ideas and insights from our community.
           </p>
         </div>

@@ -35,8 +35,8 @@ function Post() {
   return post ? (
     <div className="py-10">
       <Container>
-        <article className="max-w-4xl mx-auto bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm">
-          <div className="relative w-full overflow-hidden rounded-2xl mb-8 bg-slate-100 max-h-[460px] flex items-center justify-center">
+        <article className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200/80 dark:border-slate-800 shadow-sm">
+          <div className="relative w-full overflow-hidden rounded-2xl mb-8 bg-slate-100 dark:bg-slate-800 max-h-[460px] flex items-center justify-center">
             <img
               src={appwriteService.getFilePreview(post.featuredImage)}
               alt={post.title}
@@ -44,7 +44,7 @@ function Post() {
             />
 
             {isAuthor && (
-              <div className="absolute right-4 top-4 flex items-center gap-2 bg-white/90 backdrop-blur-md p-2 rounded-2xl shadow-md border border-slate-100">
+              <div className="absolute right-4 top-4 flex items-center gap-2 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-2 rounded-2xl shadow-md border border-slate-100 dark:border-slate-800">
                 <Link to={`/edit-post/${post.$id}`}>
                   <Button bgColor="bg-emerald-600 hover:bg-emerald-700" className="py-2 px-4 text-sm font-semibold">
                     Edit
@@ -58,12 +58,12 @@ function Post() {
           </div>
 
           <div className="mb-6">
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               {post.title}
             </h1>
           </div>
 
-          <div className="browser-css text-slate-700 text-base sm:text-lg leading-relaxed">
+          <div className="browser-css text-slate-700 dark:text-slate-300 text-base sm:text-lg leading-relaxed">
             {parse(post.content)}
           </div>
         </article>

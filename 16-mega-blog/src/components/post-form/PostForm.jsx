@@ -29,7 +29,8 @@ function PostForm({ post }) {
         appwriteService.deleteFile(post.featuredImage);
       }
 
-      const dbPost = await appwriteService.updatePost(post.$id, {
+      const dbPost = await appwriteService.updatePost({
+        slug: post.$id,
         ...data,
         featuredImage: file ? file.$id : undefined,
       });
@@ -81,16 +82,18 @@ function PostForm({ post }) {
   }, []);
 
   useEffect(() => {
-    const subscription = watch((value, { name }) => {
-      if (name === "title") {
-        setValue("slug", slugTransform(value.title), {
-          shouldValidate: true,
-        });
-      }
-    });
+    if (!post) {
+      const subscription = watch((value, { name }) => {
+        if (name === "title") {
+          setValue("slug", slugTransform(value.title), {
+            shouldValidate: true,
+          });
+        }
+      });
 
-    return () => subscription.unsubscribe();
-  }, [watch, slugTransform, setValue]);
+      return () => subscription.unsubscribe();
+    }
+  }, [watch, slugTransform, setValue, post]);
 
   return (
     <form onSubmit={handleSubmit(submitPost)} className="flex flex-wrap -mx-3">
@@ -104,6 +107,7 @@ function PostForm({ post }) {
           <Input
             label="Slug :"
             placeholder="post-slug"
+            disabled={!!post}
             {...register("slug", { required: true })}
             onInput={(e) => {
               setValue("slug", slugTransform(e.currentTarget.value), {

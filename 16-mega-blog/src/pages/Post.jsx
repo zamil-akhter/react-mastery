@@ -67,7 +67,7 @@ function Post() {
 
           {/* Title & Actions Bar */}
           <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight flex-1 min-w-[280px]">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight flex-1 min-w-70">
               {post.title}
             </h1>
 
